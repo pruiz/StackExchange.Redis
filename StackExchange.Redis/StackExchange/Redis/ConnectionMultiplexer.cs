@@ -1283,7 +1283,7 @@ namespace StackExchange.Redis
 
                     int iterCount = first ? 2 : 1;
                     // this is fix for https://github.com/StackExchange/StackExchange.Redis/issues/300
-                    // auto discoverability of cluster nodes is made synchronous. 
+                    // auto discoverability of cluster nodes is made synchronous.
                     // we try to connect to endpoints specified inside the user provided configuration
                     // and when we encounter one such endpoint to which we are able to successfully connect,
                     // we get the list of cluster nodes from this endpoint and try to proactively connect
@@ -1373,7 +1373,7 @@ namespace StackExchange.Redis
 
                                     if (clusterCount > 0 && !encounteredConnectedClusterServer)
                                     {
-                                        // we have encountered a connected server with clustertype for the first time. 
+                                        // we have encountered a connected server with clustertype for the first time.
                                         // so we will get list of other nodes from this server using "CLUSTER NODES" command
                                         // and try to connect to these other nodes in the next iteration
                                         encounteredConnectedClusterServer = true;
@@ -2006,10 +2006,10 @@ namespace StackExchange.Redis
                         }
                         else
                         {
-#if FEATURE_SOCKET_MODE_POLL
+//#if FEATURE_SOCKET_MODE_POLL
                             var mgrState = socketManager.State;
                             var lastError = socketManager.LastErrorTimeRelative();
-#endif
+//#endif
                             var sb = new StringBuilder("Timeout performing ").Append(message.CommandAndKey);
                             data = new List<Tuple<string, string>> { Tuple.Create("Message", message.CommandAndKey) };
                             void add(string lk, string sk, string v)
@@ -2020,10 +2020,10 @@ namespace StackExchange.Redis
 
                             int queue = server.GetOutstandingCount(message.Command, out int inst, out int qu, out int qs, out int qc, out int wr, out int wq, out int @in, out int ar);
                             add("Instantaneous", "inst", inst.ToString());
-#if FEATURE_SOCKET_MODE_POLL
+//#if FEATURE_SOCKET_MODE_POLL
                             add("Manager-State", "mgr", mgrState.ToString());
                             add("Last-Error", "err", lastError);
-#endif
+//#endif
                             add("Queue-Length", "queue", queue.ToString());
                             add("Queue-Outstanding", "qu", qu.ToString());
                             add("Queue-Awaiting-Response", "qs", qs.ToString());

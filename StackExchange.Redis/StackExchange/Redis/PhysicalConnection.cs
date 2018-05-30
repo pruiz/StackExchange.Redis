@@ -215,11 +215,11 @@ namespace StackExchange.Redis
                     add("Last-Heartbeat", "last-heartbeat", (lastBeat == 0 ? "never" : ((unchecked(now - lastBeat) / 1000) + "s ago")) + (Bridge.IsBeating ? " (mid-beat)" : ""));
                     add("Last-Multiplexer-Heartbeat", "last-mbeat", Multiplexer.LastHeartbeatSecondsAgo + "s ago");
                     add("Last-Global-Heartbeat", "global", ConnectionMultiplexer.LastGlobalHeartbeatSecondsAgo + "s ago");
-#if FEATURE_SOCKET_MODE_POLL
+//#if FEATURE_SOCKET_MODE_POLL
                     var mgr = Bridge.Multiplexer.SocketManager;
                     add("SocketManager-State", "mgr", mgr.State.ToString());
                     add("Last-Error", "err", mgr.LastErrorTimeRelative());
-#endif
+//#endif
                 }
 
                 var ex = innerException == null
@@ -726,6 +726,8 @@ namespace StackExchange.Redis
             {
                 var socketMode = SocketManager.DefaultSocketMode;
 
+                Multiplexer.Trace($"Using SocketMode: {socketMode}");
+
                 // disallow connection in some cases
                 OnDebugAbort();
 
@@ -991,7 +993,7 @@ namespace StackExchange.Redis
                 }
                 else if (itemCountActual == 0)
                 {
-                    //for zero array response by command like SCAN, Resp array: *0\r\n 
+                    //for zero array response by command like SCAN, Resp array: *0\r\n
                     return RawResult.EmptyArray;
                 }
 

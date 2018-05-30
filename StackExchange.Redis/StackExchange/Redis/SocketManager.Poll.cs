@@ -1,4 +1,4 @@
-﻿#if FEATURE_SOCKET_MODE_POLL
+﻿//#if FEATURE_SOCKET_MODE_POLL
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -64,7 +64,7 @@ namespace StackExchange.Redis
             }
         }
 
-        private void OnAddRead(Socket socket, ISocketCallback callback)
+        private void OnAddPollingRead(Socket socket, ISocketCallback callback)
         {
             if (socket == null) throw new ArgumentNullException(nameof(socket));
             if (callback == null) throw new ArgumentNullException(nameof(callback));
@@ -429,4 +429,4 @@ namespace StackExchange.Redis
         }
     }
 }
-#endif
+//#endif

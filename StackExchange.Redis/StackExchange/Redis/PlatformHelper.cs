@@ -7,12 +7,12 @@ namespace StackExchange.Redis
 {
     internal class PlatformHelper
     {
-        public static SocketMode DefaultSocketMode = IsMono && IsUnix ? SocketMode.Async : SocketMode.Poll;
+        public static readonly SocketMode DefaultSocketMode = IsMono && IsUnix ? SocketMode.Async : SocketMode.Poll;
 
-        public static bool IsMono { get; } = Type.GetType("Mono.Runtime") != null;
-        public static bool IsUnix { get; } = (int)Environment.OSVersion.Platform == 4
-                                          || (int)Environment.OSVersion.Platform == 6
-                                          || (int)Environment.OSVersion.Platform == 128;
+        public static bool IsMono => Type.GetType("Mono.Runtime") != null;
+        public static bool IsUnix => (int)Environment.OSVersion.Platform == 4
+                                  || (int)Environment.OSVersion.Platform == 6
+                                  || (int)Environment.OSVersion.Platform == 128;
 
         /// <summary>
         /// Gets the compression level from a string, avoiding a naming bug inside ancient mono versions.
